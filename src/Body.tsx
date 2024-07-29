@@ -2,19 +2,13 @@ import { useState } from "react";
 import styles from "./App.module.css";
 import "./App.css";
 import {
-  createTheme,
   CssBaseline,
   List,
   ListItem,
-  ThemeProvider,
   Typography,
 } from "@mui/material";
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
+
 
 const categories = ["Todo", "Done", "In progress"];
 const done = ["Buy milk", "Buy bread", "Buy eggs"];
@@ -66,12 +60,10 @@ function Category({ category }: { category: string }) {
 function Body() {
   return (
     <div className="body">
-      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         {categories.map((category) => {
           return <Category category={category} key={category} />;
         })}
-      </ThemeProvider>
     </div>
   );
 }
