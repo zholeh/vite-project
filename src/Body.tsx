@@ -10,12 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
-
 const categories = ["Todo", "Done", "In progress"];
 const done = ["Buy milk", "Buy bread", "Buy eggs"];
 const todo = ["Buy car", "Buy house", "Buy phone"];
@@ -63,10 +57,10 @@ function Category({ category }: { category: string }) {
   );
 }
 
-function Body() {
+function Body({ theme }: { theme: any }) {
   return (
     <div className="body">
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         {categories.map((category) => {
           return <Category category={category} key={category} />;
