@@ -1,0 +1,86 @@
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  reserve: ReserveMutation!
+  room: RoomMutation!
+}
+
+type Query {
+  reserve: ReserveQuery!
+  room: RoomQuery!
+}
+
+input ReserveCreate {
+  endDate: DateTime!
+  roomId: Float!
+  startDate: DateTime!
+  state: Boolean!
+}
+
+type ReserveModel {
+  createdAt: DateTime!
+  deletedAt: DateTime
+  endDate: DateTime!
+  id: Float!
+  roomId: Float!
+  startDate: DateTime!
+  state: Boolean!
+  stateResolver: String!
+  updatedAt: DateTime
+}
+
+type ReserveMutation {
+  create(input: ReserveCreate!): Boolean!
+  delete(id: Float!): Boolean!
+  partialUpdate(input: ReserveUpdate!): Boolean!
+  update(input: ReserveUpdate!): Boolean!
+}
+
+type ReserveQuery {
+  findMany: [ReserveModel!]!
+  findOne(id: Int!): ReserveModel!
+}
+
+input ReserveUpdate {
+  endDate: DateTime!
+  id: Float!
+  roomId: Float!
+  startDate: DateTime!
+  state: Boolean!
+}
+
+input RoomCreate {
+  description: String!
+  name: String!
+}
+
+type RoomModel {
+  createdAt: DateTime!
+  deletedAt: DateTime
+  description: String!
+  description1: String!
+  id: Int!
+  name: String!
+  updatedAt: DateTime
+}
+
+type RoomMutation {
+  create(input: RoomCreate!): Boolean!
+  delete(id: Float!): Boolean!
+  partialUpdate(input: RoomUpdate!): Boolean!
+  update(input: RoomUpdate!): Boolean!
+}
+
+type RoomQuery {
+  findMany: [RoomModel!]!
+  findOne(id: Int!): RoomModel!
+}
+
+input RoomUpdate {
+  description: String!
+  id: Float!
+  name: String!
+}

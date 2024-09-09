@@ -2,13 +2,16 @@ import { useState } from "react";
 import styles from "./App.module.css";
 import "./App.css";
 import {
-  createTheme,
   CssBaseline,
   List,
   ListItem,
+  Theme,
   ThemeProvider,
   Typography,
 } from "@mui/material";
+
+import { useQuery } from "@apollo/client";
+import { roomFindManyGql } from "./gql";
 
 const categories = ["Todo", "Done", "In progress"];
 const done = ["Buy milk", "Buy bread", "Buy eggs"];
@@ -18,6 +21,10 @@ const inProgress = ["Buy car", "Buy house", "Buy phone"];
 function Task({ task }: { task: string }) {
   const [isRed, setIsRed] = useState(false);
 
+  const { loading, error, data } = useQuery(roomFindManyGql);
+
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
   return (
     <ListItem>
       <p
@@ -27,6 +34,7 @@ function Task({ task }: { task: string }) {
         }}
       >
         {task}
+        {JSON.stringify(data, null, 2)}
       </p>
     </ListItem>
   );
@@ -57,15 +65,24 @@ function Category({ category }: { category: string }) {
   );
 }
 
-function Body({ theme }: { theme: any }) {
+function Body({ theme }: { theme?: Partial<Theme> }) {
+  if (theme) {
+    return (
+      <div className="body">
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {categories.map((category) => {
+            return <Category category={category} key={category} />;
+          })}
+        </ThemeProvider>
+      </div>
+    );
+  }
   return (
     <div className="body">
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {categories.map((category) => {
-          return <Category category={category} key={category} />;
-        })}
-      </ThemeProvider>
+      {categories.map((category) => {
+        return <Category category={category} key={category} />;
+      })}
     </div>
   );
 }

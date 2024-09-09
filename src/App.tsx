@@ -3,6 +3,23 @@ import "./App.css";
 import Body from "./Body";
 import Header from "./Header";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import RoomList from "./page/room/Room";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div>Hello world!</div>,
+  },
+  {
+    path: "/bodyExample",
+    element: <Body />,
+  },
+  {
+    path: "/room",
+    element: <RoomList />,
+  },
+]);
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true); // false -> light mode, true -> dark mode
@@ -26,7 +43,7 @@ function App() {
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <Header toggleTheme={toggleTheme} />
-      <Body theme={isDarkMode ? darkTheme : lightTheme} />
+      <RouterProvider router={router} />
     </ThemeProvider>
   );
 }
